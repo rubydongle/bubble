@@ -26,6 +26,7 @@ Android comic book reader.
 * Nicola Spanti (french translation)
 * Alez Boom (spanish translation)
 * Markus Dittmann (german translation)
+* George Netu (romanian translation)
 
 ## License
 
