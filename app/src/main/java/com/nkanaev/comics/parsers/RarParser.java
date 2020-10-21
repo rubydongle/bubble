@@ -3,7 +3,6 @@ package com.nkanaev.comics.parsers;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;

@@ -2,17 +2,18 @@ package com.nkanaev.comics.activity;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.google.android.material.navigation.NavigationView;
 import com.nkanaev.comics.R;
 import com.nkanaev.comics.fragment.AboutFragment;
 import com.nkanaev.comics.fragment.BrowserFragment;
@@ -68,15 +69,14 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         if (savedInstanceState == null) {
             setFragment(new LibraryFragment());
-            setNavBar();
+//            setNavBar(navigationView);
             mCurrentNavItem = R.id.drawer_menu_library;
-            navigationView.getMenu().findItem(mCurrentNavItem).setChecked(true);
         }
         else {
             onBackStackChanged();  // force-call method to ensure indicator is shown properly
             mCurrentNavItem = savedInstanceState.getInt(STATE_CURRENT_MENU_ITEM);
-            navigationView.getMenu().findItem(mCurrentNavItem).setChecked(true);
         }
+        navigationView.getMenu().findItem(mCurrentNavItem).setChecked(true);
     }
 
     @Override
@@ -101,7 +101,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         return mPicasso;
     }
 
-    private void setNavBar() {
+    private void setNavBar(NavigationView view) {
+//    private void setNavBar() {
+//        view.findViewById()
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.header, new HeaderFragment())
@@ -138,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     private void setupNavigationView(NavigationView view) {
-        view.setNavigationItemSelectedListener(new OnNavigationItemSelectedListener() {
+        view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem menuItem) {
                 if (mCurrentNavItem == menuItem.getItemId()) {

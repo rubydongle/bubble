@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<androidx.drawerlayout.widget.DrawerLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/drawer_layout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/lighter">
-    <android.support.design.widget.AppBarLayout
+
+    <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -23,16 +24,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:background="@color/lighter"/>
-    </android.support.design.widget.AppBarLayout>
-    <android.support.design.widget.NavigationView
-            android:id="@+id/navigation_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            android:background="@color/lightest"
-            app:headerLayout="@layout/layout_header"
-            app:menu="@menu/drawer"
-            app:itemTextColor="@drawable/nav_item"
-            app:itemIconTint="@drawable/nav_item"/>
-</android.support.v4.widget.DrawerLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        android:background="@color/lightest"
+        app:headerLayout="@layout/fragment_header"
+        app:menu="@menu/drawer"
+        app:itemTextColor="@drawable/nav_item"
+        app:itemIconTint="@drawable/nav_item">
+<!--        app:headerLayout="@layout/layout_header"-->
+<!--        <include layout="@layout/layout_header" />-->
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>

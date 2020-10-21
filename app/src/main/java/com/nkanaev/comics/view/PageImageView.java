@@ -6,7 +6,6 @@ import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.*;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -14,9 +13,12 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.widget.ImageView;
 import android.widget.OverScroller;
+
+import androidx.core.view.ViewCompat;
+
 import com.nkanaev.comics.Constants;
 
-public class PageImageView extends ImageView {
+public class PageImageView extends androidx.appcompat.widget.AppCompatImageView {
     private Constants.PageViewMode mViewMode;
     private boolean mHaveFrame = false;
     private boolean mSkipScaling = false;
