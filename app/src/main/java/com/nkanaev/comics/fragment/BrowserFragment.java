@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,12 +80,23 @@ public class BrowserFragment extends Fragment
     }
 
     private void setCurrentDir(File dir) {
+
+        Log.d("ruby", "set current dir:"+ dir.getAbsolutePath());
         mCurrentDir = dir;
+        mCurrentDir = new File(String.valueOf(dir.getAbsoluteFile()));
+        for(File file : mCurrentDir.listFiles()) {
+            Log.d("ruby", "file:"+ file.getName());
+
+        }
         ArrayList<File> subdirs = new ArrayList<>();
         if (!mCurrentDir.getAbsolutePath().equals(mRootDir.getAbsolutePath())) {
             subdirs.add(mCurrentDir.getParentFile());
         }
         File[] files = mCurrentDir.listFiles();
+        for(File file : files) {
+            Log.d("ruby", "file:"+ file.getName());
+
+        }
         if (files != null) {
             for (File f : files) {
                 if (f.isDirectory() || Utils.isArchive(f.getName())) {

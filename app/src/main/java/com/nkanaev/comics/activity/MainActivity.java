@@ -1,13 +1,18 @@
 package com.nkanaev.comics.activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -27,6 +32,7 @@ import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
     private final static String STATE_CURRENT_MENU_ITEM = "STATE_CURRENT_MENU_ITEM";
+    private static final String TAG = "ruby";
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -37,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_main);
+        isStoragePermissionGranted();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -190,5 +197,27 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 mDrawerLayout.openDrawer(GravityCompat.START);
         }
         return super.onSupportNavigateUp();
+    }
+
+
+
+    public  boolean isStoragePermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+                return true;
+            } else {
+
+                Log.v(TAG,"Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{ Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v(TAG,"Permission is granted");
+            return true;
+        }
     }
 }
