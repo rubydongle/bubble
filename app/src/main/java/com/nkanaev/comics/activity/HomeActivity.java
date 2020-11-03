@@ -18,12 +18,17 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.navigation.NavigationView;
 import com.nkanaev.comics.R;
+import com.nkanaev.comics.fragment.BrowserFragment;
 import com.nkanaev.comics.fragment.home.HomeFragment;
+import com.nkanaev.comics.managers.LocalCoverHandler;
+import com.squareup.picasso.Picasso;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     DrawerLayout mDrawerLayout;
     NavigationView mNavigationView;
+
+    private Picasso mPicasso;
 
 
     public static final int REQUEST_CODE = 99;
@@ -64,6 +69,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
 
     Fragment mHomeFragment;
+    Fragment mBrowserFragment;
     FragmentTransaction mFragmentTransaction;
 
     @Override
@@ -77,6 +83,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);//::onNavigationItemSelected);
+
+        mPicasso = new Picasso.Builder(this)
+                .addRequestHandler(new LocalCoverHandler(this))
+                .build();
+
+        mBrowserFragment = new BrowserFragment();
     }
 
     @Override
@@ -87,7 +99,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private boolean isBackToDesktop() {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        return (currentFragment instanceof HomeFragment);
+        return (currentFragment instanceof HomeFragment || currentFragment instanceof BrowserFragment);
     }
 
     @Override
@@ -122,8 +134,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 //            case R.id.nav_scan_games:
 //                startActivity(new Intent(this, GameScanActivity.class));
 //                break;
+            case R.id.drawer_menu_library:
+                mHomeFragment = new HomeFragment();
+                mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+                mFragmentTransaction.replace(R.id.fragment_container, mHomeFragment).commitAllowingStateLoss();
+                break;
+            case R.id.drawer_menu_browser:
+                mBrowserFragment = new BrowserFragment();
+                mFragmentTransaction = getSupportFragmentManager().beginTransaction();
+                mFragmentTransaction.replace(R.id.fragment_container, mBrowserFragment).commitAllowingStateLoss();
+                break;
             case R.id.drawer_menu_scan:
                 startActivity(new Intent(this, ScanActivity.class));
+                break;
+            case R.id.drawer_menu_settings:
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
             case R.id.drawer_menu_about:
                 startActivity(new Intent(this, AboutActivity.class));
@@ -133,6 +158,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return false;
     }
 
+    public Picasso getPicasso() {
+        return mPicasso;
+    }
 
 
 }

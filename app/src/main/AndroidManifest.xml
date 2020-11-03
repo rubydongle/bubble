@@ -19,6 +19,9 @@
         <activity android:name=".activity.ScanActivity"
             android:label="@string/scan">
         </activity>
+        <activity android:name=".activity.SettingsActivity"
+            android:label="@string/menu_settings">
+        </activity>
         <activity android:name=".activity.MainActivity"
             android:label="@string/app_name">
         </activity>

@@ -11,8 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.nkanaev.comics.R;
 import com.nkanaev.comics.managers.DirectoryListingManager;
+import com.nkanaev.comics.managers.LocalCoverHandler;
 import com.nkanaev.comics.model.Comic;
 import com.nkanaev.comics.model.Storage;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +24,11 @@ public class LocalComicsAdapter extends RecyclerView.Adapter<LocalComicsAdapter.
 
     private ArrayList<Comic> comics = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
+    private Picasso mPicasso;
 
-    public LocalComicsAdapter(OnItemClickListener listener) {
+    public LocalComicsAdapter(Picasso picasso, OnItemClickListener listener) {
         onItemClickListener = listener;
-
+        mPicasso = picasso;
     }
 
     @NonNull
@@ -38,6 +41,7 @@ public class LocalComicsAdapter extends RecyclerView.Adapter<LocalComicsAdapter.
 
     @Override
     public void onBindViewHolder(GameViewHolder holder, final int position) {
+        Comic comic = comics.get(position);
         holder.setGameTitle(comics.get(position).getFile().getName());//getCleanName());
         holder.holderView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +55,8 @@ public class LocalComicsAdapter extends RecyclerView.Adapter<LocalComicsAdapter.
                 onItemClickListener.onItemMoreClick(comics.get(position));
             }
         });
+        mPicasso.load(LocalCoverHandler.getComicCoverUri(comic))
+                .into(holder.imageView);
     }
 
     @Override
@@ -77,6 +83,7 @@ public class LocalComicsAdapter extends RecyclerView.Adapter<LocalComicsAdapter.
         public void setGameTitle(String title) {
             textView.setText(title);
         }
+
     }
 
     public void setComics(ArrayList<Comic> comics) {

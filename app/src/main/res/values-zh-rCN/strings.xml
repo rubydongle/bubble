@@ -8,4 +8,10 @@
     <string name="menu_about">关于</string>
 
     <string name="about">关于</string>
+
+    <string name="tab_local_comics">本地</string>
+    <string name="tab_reading_comics">阅读中</string>
+    <string name="tab_unread_comics">未读</string>
+    <string name="tab_read_comics">已读</string>
+    <string name="tab_favourite_comics">喜爱</string>
 </resources>

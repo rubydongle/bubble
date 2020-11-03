@@ -14,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.nkanaev.comics.R;
@@ -37,6 +41,8 @@ public class BrowserFragment extends Fragment
     private File[] mSubdirs = new File[]{};
     private TextView mDirTextView;
 
+    Toolbar mToolbar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,25 +54,42 @@ public class BrowserFragment extends Fragment
             mCurrentDir = Environment.getExternalStorageDirectory();
         }
 
-        getActivity().setTitle(R.string.menu_browser);
+//        getActivity().setTitle(R.string.menu_browser);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.fragment_browser, container, false);
+        final View root = inflater.inflate(R.layout.fragment_browser, container, false);
 
-        ViewGroup toolbar = (ViewGroup) getActivity().findViewById(R.id.toolbar);
-        ViewGroup breadcrumbLayout = (ViewGroup) inflater.inflate(R.layout.breadcrumb, toolbar, false);
-        toolbar.addView(breadcrumbLayout);
-        mDirTextView = (TextView) breadcrumbLayout.findViewById(R.id.dir_textview);
+        mToolbar = root.findViewById(R.id.toolbar);
+//        ViewGroup toolbar = (ViewGroup) getActivity().findViewById(R.id.toolbar);
+//        ViewGroup breadcrumbLayout = (ViewGroup) inflater.inflate(R.layout.breadcrumb, toolbar, false);
+//        toolbar.addView(breadcrumbLayout);
+//        mDirTextView = (TextView) breadcrumbLayout.findViewById(R.id.dir_textview);
+        mDirTextView = (TextView) root.findViewById(R.id.dir_textview);
 
         setCurrentDir(mCurrentDir);
 
-        mListView = (ListView) view.findViewById(R.id.listview_browser);
+        mListView = (ListView) root.findViewById(R.id.listview_browser);
         mListView.setAdapter(new DirectoryAdapter());
         mListView.setOnItemClickListener(this);
 
-        return view;
+        return root;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (getActivity() != null) {
+            mToolbar.setTitle(R.string.menu_browser);
+            AppCompatActivity appCompatActivity = (AppCompatActivity) getActivity();
+            appCompatActivity.setSupportActionBar(mToolbar);
+            final ActionBar toggle = appCompatActivity.getSupportActionBar();
+            if (toggle != null) {
+                toggle.setHomeAsUpIndicator(R.drawable.ic_menu_white);
+                toggle.setDisplayHomeAsUpEnabled(true);
+            }
+        }
     }
 
     @Override
@@ -77,9 +100,9 @@ public class BrowserFragment extends Fragment
 
     @Override
     public void onDestroyView() {
-        ViewGroup toolbar = (ViewGroup) getActivity().findViewById(R.id.toolbar);
-        ViewGroup breadcrumb = (ViewGroup) toolbar.findViewById(R.id.breadcrumb_layout);
-        toolbar.removeView(breadcrumb);
+//        ViewGroup toolbar = (ViewGroup) getActivity().findViewById(R.id.toolbar);
+//        ViewGroup breadcrumb = (ViewGroup) mToolbar.findViewById(R.id.breadcrumb_layout);
+//        mToolbar.removeView(breadcrumb);
         super.onDestroyView();
     }
 
