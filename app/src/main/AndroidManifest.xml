@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.nkanaev.comics">
+    package="com.midas.comics">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application android:label="@string/app_name"
@@ -8,34 +8,34 @@
         android:requestLegacyExternalStorage="true"
         android:theme="@style/AppTheme"
         android:largeHeap="true"
-        android:name=".MainApplication">
-        <activity android:name=".activity.HomeActivity"
+        android:name="com.midas.comics.MainApplication">
+        <activity android:name="com.midas.comics.activity.HomeActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ScanActivity"
+        <activity android:name="com.midas.comics.activity.ScanActivity"
             android:label="@string/scan">
         </activity>
-        <activity android:name=".activity.SettingsActivity"
+        <activity android:name="com.midas.comics.activity.SettingsActivity"
             android:label="@string/menu_settings">
         </activity>
-        <activity android:name=".activity.MainActivity"
+        <activity android:name="com.midas.comics.activity.MainActivity"
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name=".activity.AboutActivity"
+            android:name="com.midas.comics.activity.AboutActivity"
             android:exported="false" />
 
-        <activity android:name=".activity.ReaderActivity"
+        <activity android:name="com.midas.comics.activity.ReaderActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".activity.MainActivity"
+            android:parentActivityName="com.midas.comics.activity.MainActivity"
             android:theme="@style/ReaderTheme">
 
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.MainActivity" />
+                android:value="com.midas.comics.activity.MainActivity" />
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
