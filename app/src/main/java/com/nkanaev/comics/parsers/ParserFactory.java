@@ -14,21 +14,21 @@ public class ParserFactory {
     public static Parser create(File file) {
         Parser parser = null;
         String fileName = file.getAbsolutePath().toLowerCase();
+
         if (file.isDirectory()) {
             parser = new DirectoryParser();
         }
+
         if (Utils.isZip(fileName)) {
             parser = new ZipParser();
-        }
-        else if (Utils.isRar(fileName)) {
+        } else if (Utils.isRar(fileName)) {
             parser = new RarParser();
-        }
-        else if (Utils.isTarball(fileName)) {
+        } else if (Utils.isTarball(fileName)) {
             parser = new TarParser();
-        }
-        else if (Utils.isSevenZ(fileName)) {
+        } else if (Utils.isSevenZ(fileName)) {
             parser = new SevenZParser();
         }
+
         return tryParse(parser, file);
     }
 
@@ -36,6 +36,7 @@ public class ParserFactory {
         if (parser == null) {
             return null;
         }
+
         try {
             parser.parse(file);
         }

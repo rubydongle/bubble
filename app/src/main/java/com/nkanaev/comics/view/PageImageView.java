@@ -5,18 +5,22 @@ import android.graphics.Matrix;
 import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.AttributeSet;
-import android.view.*;
+import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
+import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.widget.ImageView;
 import android.widget.OverScroller;
 
 import androidx.core.view.ViewCompat;
 
 import com.nkanaev.comics.Constants;
+
+import static java.lang.System.*;
 
 public class PageImageView extends androidx.appcompat.widget.AppCompatImageView {
     private Constants.PageViewMode mViewMode;
@@ -29,7 +33,7 @@ public class PageImageView extends androidx.appcompat.widget.AppCompatImageView 
     private OverScroller mScroller;
     private float mMinScale, mMaxScale;
     private float mOriginalScale;
-    private float[] m = new float[9];
+    private final float[] m = new float[9];
     private Matrix mMatrix;
 
     public PageImageView(Context context) {
@@ -286,9 +290,7 @@ public class PageImageView extends androidx.appcompat.widget.AppCompatImageView 
     @Override
     public void setImageMatrix(Matrix matrix) {
         super.setImageMatrix(fixMatrix(matrix));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            postInvalidate();
-        }
+        postInvalidate();
     }
 
     private Matrix fixMatrix(Matrix matrix) {
@@ -304,14 +306,17 @@ public class PageImageView extends androidx.appcompat.widget.AppCompatImageView 
         int maxTransX = imageWidth - getWidth();
         int maxTransY = imageHeight - getHeight();
 
-        if (imageWidth > getWidth())
+        if (imageWidth > getWidth()) {
             m[Matrix.MTRANS_X] = Math.min(0, Math.max(m[Matrix.MTRANS_X], -maxTransX));
-        else
+        } else {
             m[Matrix.MTRANS_X] = getWidth() / 2 - imageWidth / 2;
-        if (imageHeight > getHeight())
+        }
+
+        if (imageHeight > getHeight()) {
             m[Matrix.MTRANS_Y] = Math.min(0, Math.max(m[Matrix.MTRANS_Y], -maxTransY));
-        else
+        } else {
             m[Matrix.MTRANS_Y] = getHeight() / 2 - imageHeight / 2;
+        }
 
         matrix.setValues(m);
         return matrix;
@@ -351,14 +356,14 @@ public class PageImageView extends androidx.appcompat.widget.AppCompatImageView 
 
             mInterpolator = new AccelerateDecelerateInterpolator();
             mStartScale = getCurrentScale();
-            mStartTime = System.currentTimeMillis();
+            mStartTime = currentTimeMillis();
         }
 
         @Override
         public void run() {
-            float t = (float)(System.currentTimeMillis() - mStartTime) / ZOOM_DURATION;
+            float t = (float)(currentTimeMillis() - mStartTime) / ZOOM_DURATION;
             float interpolateRatio = mInterpolator.getInterpolation(t);
-            t = (t > 1f) ? 1f : t;
+            t = Math.min(t, 1f);
 
             mMatrix.getValues(m);
             float newScale = mStartScale + interpolateRatio * (mScale - mStartScale);

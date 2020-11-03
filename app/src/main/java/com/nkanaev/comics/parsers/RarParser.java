@@ -1,6 +1,10 @@
 package com.nkanaev.comics.parsers;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -12,7 +16,7 @@ import com.nkanaev.comics.managers.Utils;
 
 
 public class RarParser implements Parser {
-    private ArrayList<FileHeader> mHeaders = new ArrayList<FileHeader>();
+    private final ArrayList<FileHeader> mHeaders = new ArrayList<>();
     private Archive mArchive;
     private File mCacheDir;
     private boolean mSolidFileExtracted = false;
@@ -20,7 +24,7 @@ public class RarParser implements Parser {
     @Override
     public void parse(File file) throws IOException {
         try {
-            mArchive = new Archive(file);
+            mArchive = new Archive(file, null);
         }
         catch (RarException e) {
             throw new IOException("unable to open archive");

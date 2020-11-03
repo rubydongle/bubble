@@ -10,15 +10,27 @@ import android.os.Bundle;
 import android.content.Context;
 import android.os.Handler;
 import android.util.SparseArray;
-import android.view.*;
-import android.widget.*;
+import android.view.GestureDetector;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import com.nkanaev.comics.Constants;
 import com.nkanaev.comics.R;
@@ -32,12 +44,15 @@ import com.nkanaev.comics.parsers.RarParser;
 import com.nkanaev.comics.view.ComicViewPager;
 import com.nkanaev.comics.view.PageImageView;
 import com.nkanaev.comics.parsers.Parser;
-
-import com.squareup.picasso.*;
+import com.squareup.picasso.MemoryPolicy;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
+
+import static androidx.viewpager.widget.ViewPager.*;
 
 
 public class ReaderFragment extends Fragment implements View.OnTouchListener {
@@ -71,7 +86,7 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
     private Parser mParser;
     private Picasso mPicasso;
     private LocalComicHandler mComicHandler;
-    private SparseArray<Target> mTargets = new SparseArray<>();
+    private final SparseArray<Target> mTargets = new SparseArray<>();
 
     private Comic mComic;
     private Comic mNewComic;
@@ -98,11 +113,11 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
         return fragment;
     }
 
-    public static ReaderFragment create(File comicpath) {
+    public static ReaderFragment create(File comicPath) {
         ReaderFragment fragment = new ReaderFragment();
         Bundle args = new Bundle();
         args.putSerializable(PARAM_MODE, Mode.MODE_BROWSER);
-        args.putSerializable(PARAM_HANDLER, comicpath);
+        args.putSerializable(PARAM_HANDLER, comicPath);
         fragment.setArguments(args);
         return fragment;
     }
@@ -188,12 +203,12 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
                 mPicasso.resumeTag(ReaderFragment.this.getActivity());
             }
         });
-        mPageNavTextView = (TextView) mPageNavLayout.findViewById(R.id.pageNavTextView);
-        mViewPager = (ComicViewPager) view.findViewById(R.id.viewPager);
+        mPageNavTextView = mPageNavLayout.findViewById(R.id.pageNavTextView);
+        mViewPager = view.findViewById(R.id.viewPager);
         mViewPager.setAdapter(mPagerAdapter);
-        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setOffscreenPageLimit(5);
         mViewPager.setOnTouchListener(this);
-        mViewPager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
+        mViewPager.addOnPageChangeListener(new SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
                 if (mIsLeftToRight) {
@@ -457,7 +472,7 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
                 return;
 
             setVisibility(View.VISIBLE, View.GONE, View.GONE);
-            ImageView iv = (ImageView) layout.findViewById(R.id.pageImageView);
+            ImageView iv = layout.findViewById(R.id.pageImageView);
             iv.setImageBitmap(bitmap);
         }
 
@@ -469,7 +484,7 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
 
             setVisibility(View.GONE, View.GONE, View.VISIBLE);
 
-            ImageButton ib = (ImageButton) layout.findViewById(R.id.reloadButton);
+            ImageButton ib = layout.findViewById(R.id.reloadButton);
             ib.setOnClickListener(this);
         }
 

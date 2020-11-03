@@ -1,11 +1,11 @@
 package com.nkanaev.comics;
 
 public class Constants {
-    public static final int COVER_THUMBNAIL_HEIGHT = 300;
-    public static final int COVER_THUMBNAIL_WIDTH = 200;
+    public static final int COVER_THUMBNAIL_HEIGHT = 600;
+    public static final int COVER_THUMBNAIL_WIDTH = 400;
 
-    public static final int MAX_PAGE_HEIGHT = 1600;
-    public static final int MAX_PAGE_WIDTH = 2000;
+    public static final int MAX_PAGE_HEIGHT = 3200;
+    public static final int MAX_PAGE_WIDTH = 4000;
 
     public static final int MAX_RECENT_COUNT = 5;
 

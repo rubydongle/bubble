@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.nkanaev.comics">
+    package="com.nkanaev.comics">
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application android:label="@string/app_name"
-                 android:icon="@drawable/ic_book"
-                 android:theme="@style/AppTheme"
-                 android:largeHeap="true"
-                 android:name=".MainApplication">
+        android:icon="@drawable/ic_book"
+        android:requestLegacyExternalStorage="true"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true"
+        android:name=".MainApplication">
         <activity android:name=".activity.MainActivity"
-                  android:label="@string/app_name">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -17,12 +18,12 @@
         </activity>
 
         <activity android:name=".activity.ReaderActivity"
-                  android:label="@string/app_name"
-                  android:parentActivityName=".activity.MainActivity"
-                  android:theme="@style/ReaderTheme">
+            android:label="@string/app_name"
+            android:parentActivityName=".activity.MainActivity"
+            android:theme="@style/ReaderTheme">
 
             <meta-data android:name="android.support.PARENT_ACTIVITY"
-                       android:value=".activity.MainActivity" />
+                android:value=".activity.MainActivity" />
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

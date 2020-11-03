@@ -4,17 +4,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.nkanaev.comics.Constants;
 import com.nkanaev.comics.R;
 import com.nkanaev.comics.activity.MainActivity;
@@ -141,10 +146,11 @@ public class LibraryBrowserFragment extends Fragment
 
     public void openComic(Comic comic) {
         if (!comic.getFile().exists()) {
-            Toast.makeText(
-                    getActivity(),
-                    R.string.warning_missing_file,
-                    Toast.LENGTH_SHORT).show();
+            Snackbar.make(getView(), "Missing file. please update the library", Snackbar.LENGTH_SHORT).show();
+//            Toast.makeText(
+//                    getActivity(),
+//                    R.string.warning_missing_file,
+//                    Toast.LENGTH_SHORT).show();
             return;
         }
 

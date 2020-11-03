@@ -8,7 +8,10 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.util.DisplayMetrics;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.MessageDigest;
 
 import static android.content.Context.ACTIVITY_SERVICE;
