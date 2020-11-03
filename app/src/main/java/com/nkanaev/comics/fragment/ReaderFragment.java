@@ -75,7 +75,6 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
     private SharedPreferences mPreferences;
     private GestureDetector mGestureDetector;
 
-    private final static HashMap<Integer, Constants.PageViewMode> RESOURCE_VIEW_MODE;
     private boolean mIsFullscreen;
     private int mCurrentPage;
     private String mFilename;
@@ -97,8 +96,9 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
         MODE_BROWSER;
     }
 
+    private final static HashMap<Integer, Constants.PageViewMode> RESOURCE_VIEW_MODE;
     static {
-        RESOURCE_VIEW_MODE = new HashMap<Integer, Constants.PageViewMode>();
+        RESOURCE_VIEW_MODE = new HashMap<>();
         RESOURCE_VIEW_MODE.put(R.id.view_mode_aspect_fill, Constants.PageViewMode.ASPECT_FILL);
         RESOURCE_VIEW_MODE.put(R.id.view_mode_aspect_fit, Constants.PageViewMode.ASPECT_FIT);
         RESOURCE_VIEW_MODE.put(R.id.view_mode_fit_width, Constants.PageViewMode.FIT_WIDTH);
@@ -179,8 +179,8 @@ public class ReaderFragment extends Fragment implements View.OnTouchListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_reader, container, false);
 
-        mPageNavLayout = (LinearLayout) getActivity().findViewById(R.id.pageNavLayout);
-        mPageSeekBar = (SeekBar) mPageNavLayout.findViewById(R.id.pageSeekBar);
+        mPageNavLayout = getActivity().findViewById(R.id.pageNavLayout);
+        mPageSeekBar = mPageNavLayout.findViewById(R.id.pageSeekBar);
         mPageSeekBar.setMax(mParser.numPages() - 1);
         mPageSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
