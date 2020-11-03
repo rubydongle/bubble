@@ -8,6 +8,9 @@
         <item android:id="@+id/drawer_menu_browser"
               android:icon="@drawable/ic_folder_grey600_24dp"
               android:title="@string/menu_browser"/>
+        <item android:id="@+id/drawer_menu_scan"
+            android:icon="@drawable/ic_menu_scan"
+            android:title="@string/menu_scan"/>
         <item android:id="@+id/drawer_menu_settings"
             android:icon="@drawable/ic_settings"
             android:title="@string/menu_settings"/>

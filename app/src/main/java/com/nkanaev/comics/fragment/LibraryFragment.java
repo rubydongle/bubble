@@ -89,12 +89,12 @@ public class LibraryFragment extends Fragment
 
         mPicasso = ((MainActivity) getActivity()).getPicasso();
 
-        mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.fragmentLibraryLayout);
+        mRefreshLayout = view.findViewById(R.id.fragmentLibraryLayout);
         mRefreshLayout.setColorSchemeColors(R.color.primary);
         mRefreshLayout.setOnRefreshListener(this);
         mRefreshLayout.setEnabled(true);
 
-        mGridView = (GridView) view.findViewById(R.id.groupGridView);
+        mGridView = view.findViewById(R.id.groupGridView);
         mGridView.setAdapter(new GroupBrowserAdapter());
         mGridView.setOnItemClickListener(this);
 

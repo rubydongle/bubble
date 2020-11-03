@@ -23,7 +23,7 @@ public class ReaderActivity extends AppCompatActivity {
 
         setContentView(R.layout.layout_reader);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_reader);
+        Toolbar toolbar = findViewById(R.id.toolbar_reader);
         setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {

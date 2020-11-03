@@ -15,4 +15,9 @@
         <item name="android:textColorPrimary">@color/lightest</item>
         <item name="colorControlNormal">@color/lightest</item>
     </style>
+
+    <style name="ScanButton" parent="Theme.MaterialComponents">
+        <item name="strokeColor">@color/app_green</item>
+        <item name="strokeWidth">2dp</item>
+    </style>
 </resources>

@@ -3,6 +3,9 @@
     <string name="app_name">Bubble</string>
     <string name="menu_library">漫画库</string>
     <string name="menu_browser">浏览</string>
+    <string name="menu_scan">扫描</string>
     <string name="menu_settings">设置</string>
     <string name="menu_about">关于</string>
+
+    <string name="about">关于</string>
 </resources>

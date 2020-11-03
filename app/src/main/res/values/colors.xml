@@ -14,4 +14,16 @@
     <color name="circle_grey">#9d9d9d</color>
     <color name="circle_red">#F44336</color>
     <color name="circle_green">#4CAF50</color>
+
+    <color name="app_blue">#4285F4</color>
+    <color name="app_blue_dark">#3367D6</color>
+    <color name="app_green">#05b962</color>
+    <color name="app_green_dark">#0B8043</color>
+    <color name="app_yellow">#F4B400</color>
+    <color name="app_yellow_dark">#F09300</color>
+    <color name="app_red">#DB4437</color>
+    <color name="app_red_dark">#D32F2F</color>
+    <color name="app_white">#FFFFFF</color>
+
+    <color name="list_seperator">#11111111</color>
 </resources>

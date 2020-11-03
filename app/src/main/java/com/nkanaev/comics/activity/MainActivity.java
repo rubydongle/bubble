@@ -1,6 +1,7 @@
 package com.nkanaev.comics.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,11 +28,10 @@ import com.nkanaev.comics.fragment.HeaderFragment;
 import com.nkanaev.comics.fragment.LibraryFragment;
 import com.nkanaev.comics.managers.LocalCoverHandler;
 import com.nkanaev.comics.managers.Scanner;
-import com.nkanaev.comics.managers.Utils;
 import com.squareup.picasso.Picasso;
 
 
-public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
+public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener, NavigationView.OnNavigationItemSelectedListener {
     private final static String STATE_CURRENT_MENU_ITEM = "STATE_CURRENT_MENU_ITEM";
     private static final String TAG = "ruby";
 
@@ -49,9 +50,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         setSupportActionBar(toolbar);
         getSupportFragmentManager().addOnBackStackChangedListener(this);
 
-        if (Utils.isLollipopOrLater()) {
-            toolbar.setElevation(8);
-        }
+//        if (Utils.isLollipopOrLater()) {
+//            toolbar.setElevation(8);
+//        }
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -63,14 +64,14 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
                 .addRequestHandler(new LocalCoverHandler(this))
                 .build();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.navigation_view);
-        setupNavigationView(navigationView);
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this, mDrawerLayout,
-                R.string.drawer_open, R.string.drawer_close);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+//        mDrawerToggle = new ActionBarDrawerToggle(
+//                this, mDrawerLayout,
+//                R.string.drawer_open, R.string.drawer_close);
+//        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         Scanner.getInstance().scanLibrary();
 
@@ -78,18 +79,17 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             setFragment(new LibraryFragment());
 //            setNavBar(navigationView);
             mCurrentNavItem = R.id.drawer_menu_library;
-        }
-        else {
+        } else {
             onBackStackChanged();  // force-call method to ensure indicator is shown properly
             mCurrentNavItem = savedInstanceState.getInt(STATE_CURRENT_MENU_ITEM);
         }
-        navigationView.getMenu().findItem(mCurrentNavItem).setChecked(true);
+//        navigationView.getMenu().findItem(mCurrentNavItem).setChecked(true);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+//        mDrawerToggle.syncState();
     }
 
     @Override
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+//        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     public Picasso getPicasso() {
@@ -146,58 +146,29 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         return false;
     }
 
-    private void setupNavigationView(NavigationView view) {
-        view.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(MenuItem menuItem) {
-                if (mCurrentNavItem == menuItem.getItemId()) {
-                    mDrawerLayout.closeDrawers();
-                    return true;
-                }
-
-                switch (menuItem.getItemId()) {
-                    case R.id.drawer_menu_library:
-                        setFragment(new LibraryFragment());
-                        break;
-                    case R.id.drawer_menu_browser:
-                        setFragment(new BrowserFragment());
-                        break;
-                    case R.id.drawer_menu_about:
-                        setTitle(R.string.menu_about);
-                        setFragment(new AboutFragment());
-                        break;
-                }
-
-                mCurrentNavItem = menuItem.getItemId();
-                menuItem.setChecked(true);
-                mDrawerLayout.closeDrawers();
-                return true;
-            }
-        });
-    }
 
     @Override
     public void onBackStackChanged() {
-        mDrawerToggle.setDrawerIndicatorEnabled(getSupportFragmentManager().getBackStackEntryCount() == 0);
+//        mDrawerToggle.setDrawerIndicatorEnabled(getSupportFragmentManager().getBackStackEntryCount() == 0);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (!popFragment()) {
-            finish();
-        }
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        if (!popFragment()) {
-            if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
-                mDrawerLayout.closeDrawers();
-            else
-                mDrawerLayout.openDrawer(GravityCompat.START);
-        }
-        return super.onSupportNavigateUp();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (!popFragment()) {
+//            finish();
+//        }
+//    }
+//
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        if (!popFragment()) {
+//            if (mDrawerLayout.isDrawerOpen(GravityCompat.START))
+//                mDrawerLayout.closeDrawers();
+//            else
+//                mDrawerLayout.openDrawer(GravityCompat.START);
+//        }
+//        return super.onSupportNavigateUp();
+//    }
 
 
 
@@ -219,5 +190,34 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
             Log.v(TAG,"Permission is granted");
             return true;
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        if (mCurrentNavItem == menuItem.getItemId()) {
+            mDrawerLayout.closeDrawers();
+            return true;
+        }
+
+        switch (menuItem.getItemId()) {
+            case R.id.drawer_menu_library:
+                setFragment(new LibraryFragment());
+                mCurrentNavItem = menuItem.getItemId();
+//                menuItem.setChecked(true);
+                break;
+            case R.id.drawer_menu_browser:
+                setFragment(new BrowserFragment());
+                mCurrentNavItem = menuItem.getItemId();
+//                menuItem.setChecked(true);
+                break;
+            case R.id.drawer_menu_about:
+                startActivity(new Intent(this, AboutActivity.class));
+//                setTitle(R.string.menu_about);
+//                setFragment(new AboutFragment());
+                break;
+        }
+
+        mDrawerLayout.closeDrawers();
+        return true;
     }
 }
