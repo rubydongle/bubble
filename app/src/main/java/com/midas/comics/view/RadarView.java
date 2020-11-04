@@ -35,7 +35,7 @@ public class RadarView extends View {
     /**
      * 是否显示雷达界面（有雷达和分数两种界面效果）
      */
-    private boolean mIsRadar = false;
+    private boolean mIsRadar = true;
 
     /**
      * 画笔
@@ -304,6 +304,12 @@ public class RadarView extends View {
 
         mPaint.reset();
         mPaint.setAntiAlias(true);
+
+        //绘制背景
+        mPaint.setStyle(Paint.Style.FILL);
+        mPaint.setColor(mOutsideBackgroundColor);
+        canvas.drawCircle(mCircleCenterX,mCircleCenterY,mRadius,mPaint);
+
         mPaint.setStyle(Paint.Style.STROKE);
 
         if(mIsShowLine){//是否绘制对角线和斜对角线
