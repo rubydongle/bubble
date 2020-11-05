@@ -56,11 +56,11 @@ public class HomeFragment extends Fragment {
 
     private void setupViewPager(ViewPager viewPager) {
         HomePageAdapter homePageAdapter = new HomePageAdapter(getChildFragmentManager());
-        homePageAdapter.addFragment(new LocalComicsFragment(), getString(R.string.tab_local_comics));
-        homePageAdapter.addFragment(new LocalComicsFragment(), getString(R.string.tab_reading_comics));
-        homePageAdapter.addFragment(new LocalComicsFragment(), getString(R.string.tab_unread_comics));
-        homePageAdapter.addFragment(new LocalComicsFragment(), getString(R.string.tab_read_comics));
-        homePageAdapter.addFragment(new LocalComicsFragment(), getString(R.string.tab_favourite_comics));
+        homePageAdapter.addFragment(LocalComicsFragment.newInstance(LocalComicsFragment.LOCAL_COMIC_TYPE_ALL), getString(R.string.tab_local_comics));
+        homePageAdapter.addFragment(LocalComicsFragment.newInstance(LocalComicsFragment.LOCAL_COMIC_TYPE_READING), getString(R.string.tab_reading_comics));
+        homePageAdapter.addFragment(LocalComicsFragment.newInstance(LocalComicsFragment.LOCAL_COMIC_TYPE_UNREAD), getString(R.string.tab_unread_comics));
+        homePageAdapter.addFragment(LocalComicsFragment.newInstance(LocalComicsFragment.LOCAL_COMIC_TYPE_READ), getString(R.string.tab_read_comics));
+        homePageAdapter.addFragment(LocalComicsFragment.newInstance(LocalComicsFragment.LOCAL_COMIC_TYPE_FAVOURITE), getString(R.string.tab_favourite_comics));
 //        homePageAdapter.addFragment(new LocalGamesFragment(), getContext().getString(R.string.home_tab_local_games));
 //        homePageAdapter.addFragment(new LatestPlayedGamesFragment(), getContext().getString(R.string.home_tab_latest_played_games));
 //        homePageAdapter.addFragment(new MostPlayedGamesFragment(), getContext().getString(R.string.home_tab_most_played_games));

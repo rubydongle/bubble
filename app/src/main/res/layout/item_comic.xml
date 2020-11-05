@@ -10,18 +10,6 @@
     android:background="?android:attr/selectableItemBackground"
     android:gravity="center_vertical">
 
-<!--    <View-->
-<!--        android:id="@+id/v_playing"-->
-<!--        android:layout_width="5dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:background="@color/app_green"-->
-<!--        android:contentDescription="@null"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
     <ImageView
         android:id="@+id/iv_cover"
         android:layout_width="64dp"
@@ -52,13 +40,20 @@
         <TextView
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSizeLarge_openSource"
+            android:textStyle="bold"
             android:lines="1"
             android:text="@string/app_name" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_page"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="page"/>
         <TextView
             android:id="@+id/tv_path"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:lines="1"
             android:text="path" />
     </LinearLayout>

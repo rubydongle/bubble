@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 
-public class LocalComicsAdapter extends RecyclerView.Adapter<LocalComicsAdapter.GameViewHolder> {
+public class LocalComicsAdapter extends RecyclerView.Adapter<LocalComicsAdapter.ComicViewHolder> {
 
     private ArrayList<Comic> comics = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
@@ -30,16 +30,18 @@ public class LocalComicsAdapter extends RecyclerView.Adapter<LocalComicsAdapter.
 
     @NonNull
     @Override
-    public GameViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ComicViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comic, parent, false);
-        GameViewHolder viewHolder = new GameViewHolder(view);
+        ComicViewHolder viewHolder = new ComicViewHolder(view);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(GameViewHolder holder, final int position) {
+    public void onBindViewHolder(ComicViewHolder holder, final int position) {
         Comic comic = comics.get(position);
-        holder.setGameTitle(comics.get(position).getFile().getName());//getCleanName());
+        holder.setComicTitle(comic.getFile().getName());//getCleanName());
+        holder.pathTextView.setText(comic.getFile().getPath());
+        holder.pageTextView.setText(comic.getTotalPages() + "页");
         holder.holderView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,22 +65,26 @@ public class LocalComicsAdapter extends RecyclerView.Adapter<LocalComicsAdapter.
 
 
 
-    class GameViewHolder extends RecyclerView.ViewHolder {
+    class ComicViewHolder extends RecyclerView.ViewHolder {
 
         public View holderView;
-        TextView textView;
+        TextView titleTextView;
+        public TextView pathTextView;
+        public TextView pageTextView;
         ImageView imageView;
         public ImageView moreView;
-        public GameViewHolder(@NonNull View itemView) {
+        public ComicViewHolder(@NonNull View itemView) {
             super(itemView);
             holderView = itemView;
-            textView = itemView.findViewById(R.id.tv_title);
+            titleTextView = itemView.findViewById(R.id.tv_title);
+            pathTextView = itemView.findViewById(R.id.tv_path);
+            pageTextView = itemView.findViewById(R.id.tv_page);
             imageView = itemView.findViewById(R.id.iv_cover);
             moreView = itemView.findViewById(R.id.iv_more);
         }
 
-        public void setGameTitle(String title) {
-            textView.setText(title);
+        public void setComicTitle(String title) {
+            titleTextView.setText(title);
         }
 
     }
@@ -89,7 +95,7 @@ public class LocalComicsAdapter extends RecyclerView.Adapter<LocalComicsAdapter.
 //        filterGames();
     }
 
-    public int addGames(ArrayList<Comic> newComics) {
+    public int addComics(ArrayList<Comic> newComics) {
         for (Comic comic : newComics) {
             if (!comics.contains(comic)) {
                 comics.add(comic);

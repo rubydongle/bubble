@@ -20,13 +20,28 @@ import com.midas.comics.fragment.ReaderFragment;
 import com.midas.comics.model.Comic;
 import com.midas.comics.model.Storage;
 
+import java.util.ArrayList;
+
 public class LocalComicsFragment extends Fragment implements LocalComicsAdapter.OnItemClickListener/*, RomScanner.OnRomsFinderListener*/ {
 
+    public static final int LOCAL_COMIC_TYPE_ALL = 0;
+    public static final int LOCAL_COMIC_TYPE_READING = 1;
+    public static final int LOCAL_COMIC_TYPE_UNREAD = 2;
+    public static final int LOCAL_COMIC_TYPE_READ = 3;
+    public static final int LOCAL_COMIC_TYPE_FAVOURITE = 4;
+
+    int type = LOCAL_COMIC_TYPE_ALL;
     private static final String TAG = "LocalGamesFragment";
     LocalComicsAdapter comicsAdapter;
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
+
+    public static LocalComicsFragment newInstance(int type) {
+        LocalComicsFragment instance = new LocalComicsFragment();
+        instance.type = type;
+        return instance;
+    }
 
     @Nullable
     @Override
@@ -46,7 +61,47 @@ public class LocalComicsFragment extends Fragment implements LocalComicsAdapter.
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        comicsAdapter.addGames(Storage.getStorage(requireContext()).listComics());
+        loadComics();
+    }
+
+    private void loadComics() {
+        ArrayList<Comic> allComics = Storage.getStorage(requireContext()).listComics();
+        switch (type) {
+            case LOCAL_COMIC_TYPE_ALL:
+                comicsAdapter.addComics(allComics);
+                break;
+            case LOCAL_COMIC_TYPE_READING:
+                ArrayList<Comic> readingComics = new ArrayList<>();
+                for (Comic comic : allComics) {
+                    if (comic.getCurrentPage() != 0) {
+                        readingComics.add(comic);
+                    }
+                }
+                comicsAdapter.addComics(readingComics);
+
+                break;
+            case LOCAL_COMIC_TYPE_UNREAD:
+                ArrayList<Comic> unreadComics = new ArrayList<>();
+                for (Comic comic : allComics) {
+                    if (comic.getCurrentPage() == 0) {
+                        unreadComics.add(comic);
+                    }
+                }
+                comicsAdapter.addComics(unreadComics);
+                break;
+            case LOCAL_COMIC_TYPE_READ:
+                ArrayList<Comic> readComics = new ArrayList<>();
+                for (Comic comic : allComics) {
+                    if (comic.getCurrentPage() == comic.getTotalPages()) {
+                        readComics.add(comic);
+                    }
+                }
+                comicsAdapter.addComics(readComics);
+                break;
+            case LOCAL_COMIC_TYPE_FAVOURITE:
+                break;
+        }
+
     }
 
 
