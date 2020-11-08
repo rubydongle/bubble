@@ -62,7 +62,7 @@ public class SevenZParser implements Parser {
 
     @Override
     public String getType() {
-        return "tar";
+        return "7z";
     }
 
     @Override

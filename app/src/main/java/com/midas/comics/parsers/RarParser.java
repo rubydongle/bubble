@@ -9,8 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import com.github.junrar.Archive;
+import com.github.junrar.UnrarCallback;
 import com.github.junrar.exception.RarException;
 import com.github.junrar.rarfile.FileHeader;
+import com.github.junrar.volume.Volume;
 import com.midas.comics.managers.NaturalOrderComparator;
 import com.midas.comics.managers.Utils;
 
@@ -24,7 +26,17 @@ public class RarParser implements Parser {
     @Override
     public void parse(File file) throws IOException {
         try {
-            mArchive = new Archive(file, null);
+            mArchive = new Archive(file, new UnrarCallback() {
+                @Override
+                public boolean isNextVolumeReady(Volume nextVolume) {
+                    return false;
+                }
+
+                @Override
+                public void volumeProgressChanged(long current, long total) {
+
+                }
+            });
         }
         catch (RarException e) {
             throw new IOException("unable to open archive");
