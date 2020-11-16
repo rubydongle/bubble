@@ -26,17 +26,17 @@ public class RarParser implements Parser {
     @Override
     public void parse(File file) throws IOException {
         try {
-            mArchive = new Archive(file, new UnrarCallback() {
-                @Override
-                public boolean isNextVolumeReady(Volume nextVolume) {
-                    return false;
-                }
-
-                @Override
-                public void volumeProgressChanged(long current, long total) {
-
-                }
-            });
+            mArchive = new Archive(file);//, new UnrarCallback() {
+//                @Override
+//                public boolean isNextVolumeReady(Volume nextVolume) {
+//                    return false;
+//                }
+//
+//                @Override
+//                public void volumeProgressChanged(long current, long total) {
+//
+//                }
+//            });
         }
         catch (RarException e) {
             throw new IOException("unable to open archive");
